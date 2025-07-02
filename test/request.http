@@ -3,7 +3,7 @@
 @me = viewer:
 
 ###
-GET {{baseUrl}}/Employees
+GET {{baseUrl}}/Employees?$expand=role,department
 Authorization: Basic {{me}}
 ###
 GET {{baseUrl}}/Departments
@@ -24,9 +24,28 @@ Content-Type: application/json
   "dateOfBirth": "2000-01-01",
   "gender": "Male",
   "email": "trinhhuynh@abvn.com",
+  "hireDate": "2020-05-18",
+  "role_ID": "8c6441f5-5095-4d48-8ebe-5138220d776d",
+  "department_ID": "69655986-18cc-47cc-aec0-9967607e0c4d"
+}
+###
+
+PUT {{baseUrl}}/Employees/59e1a9ec-53e7-4b93-b584-f6e51a500d8a
+Authorization: Basic {{me}}
+Content-Type: application/json
+
+{
+  "firstName": "Trinh",
+  "lastName": "Huynhhhhhhhh",
+  "dateOfBirth": "2000-01-01",
+  "gender": "Male",
+  "email": "trinhhuynh@abvn.com",
   "hireDate": "2022-05-18",
   "role_ID": "a208203c-7386-411a-aa63-d6dbd5914c42",
   "department_ID": "69655986-18cc-47cc-aec0-9967607e0c4d"
 }
+###
+GET {{baseUrl}}/getCurrentUserInfo()
+Authorization: Basic {{me}}
 ###
 
