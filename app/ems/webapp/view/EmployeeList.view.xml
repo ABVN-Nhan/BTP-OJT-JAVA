@@ -9,17 +9,161 @@
         id="employeeListPage"
         showHeader="false"
     >
-    <content>
-        <core:Fragment
-            fragmentName="ems.view.fragment.Header"
-            type="XML"
-        />
-    </content>
-    <footer>
-        <core:Fragment
-            fragmentName="ems.view.fragment.Footer"
-            type="XML"
-        />
-    </footer>
+        <content>
+            <core:Fragment
+                fragmentName="ems.view.fragment.Header"
+                type="XML"
+            />
+            <ScrollContainer
+                height="100%"
+                class="sapUiResponsiveMargin"
+            >
+                <Panel
+                    class="customPanel"
+                    width="auto"
+                >
+                    <Title
+                        text="{i18n>employeeListTitle}"
+                        class="sapUiSmallMarginBottom"
+                    />
+                    <VBox>
+                        <!-- Filter Section -->
+                        <HBox
+                            alignItems="End"
+                            class="sapUiSmallMarginBottom"
+                        >
+                            <Label
+                                text="{i18n>departmentLabel}"
+                                class="sapUiSmallMarginEnd alignRightText"
+                                width="80px"
+                            />
+                            <ComboBox
+                                id="departmentFilter"
+                                items="{departmentModel>/}"
+                                change="onFilterChange"
+                                placeholder="{i18n>selectDepartmentPlaceholder}"
+                                width="200px"
+                                class="sapUiSmallMarginEnd"
+                            >
+                                <core:Item
+                                    key="{departmentModel>ID}"
+                                    text="{departmentModel>name}"
+                                />
+                            </ComboBox>
+                            <Label
+                                text="{i18n>roleLabel}"
+                                class="sapUiSmallMarginBegin"
+                                width="50px"
+                            />
+                            <ComboBox
+                                id="roleFilter"
+                                items="{roleModel>/}"
+                                change="onFilterChange"
+                                placeholder="{i18n>selectRolePlaceholder}"
+                                width="200px"
+                            >
+                                <core:Item
+                                    key="{roleModel>ID}"
+                                    text="{roleModel>name}"
+                                />
+                            </ComboBox>
+                            <Button
+                                text="{i18n>clearFiltersButton}"
+                                press="onClearFilters"
+                                class="sapUiSmallMarginBegin"
+                            />
+                            <Button
+                                icon="sap-icon://refresh"
+                                press="onRefreshData"
+                                tooltip="{i18n>refreshDataTooltip}"
+                                class="sapUiSmallMarginBegin"
+                            />
+                        </HBox>
+
+                        <!-- Employee Table -->
+                        <Table
+                            id="employeeTable"
+                            inset="false"
+                            items="{
+                                path: 'employeeModel>/filteredEmployees',
+                                sorter: { path: 'lastName' }
+                            }"
+                            growing="true"
+                            growingThreshold="20"
+                        >
+                            <headerToolbar>
+                                <Toolbar>
+                                    <Title text="{i18n>employeesTableTitle}" />
+                                    <ToolbarSpacer />
+                                    <Button
+                                        text="{i18n>addEmployeeButton}"
+                                        type="Emphasized"
+                                        icon="sap-icon://add"
+                                        press="onAddEmployee"
+                                        visible="{user>/isAdmin}"
+                                    />
+                                </Toolbar>
+                            </headerToolbar>
+
+                            <columns>
+                                <Column>
+                                    <Text text="{i18n>nameColumn}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>emailColumn}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>departmentColumn}" />
+                                </Column>
+                                <Column>
+                                    <Text text="{i18n>roleColumn}" />
+                                </Column>
+                            </columns>
+
+                            <items>
+                                <ColumnListItem
+                                    type="Navigation"
+                                    press="onNavigateToDetails"
+                                >
+                                    <cells>
+                                        <!-- Name -->
+                                        <VBox>
+                                            <Text
+                                                text="{employeeModel>firstName} {employeeModel>lastName}"
+                                            />
+                                        </VBox>
+                                        <!-- Email -->
+                                        <Link
+                                            text="{employeeModel>email}"
+                                            href=""
+                                        />
+                                        <!-- Department -->
+                                        <Text
+                                            text="{employeeModel>department/name}"
+                                        />
+                                        <!-- Role -->
+                                        <Text text="{employeeModel>role/name}">
+                                            <customData>
+                                                <core:CustomData
+                                                    key="role-type"
+                                                    value="{employeeModel>role/name}"
+                                                    writeToDom="true"
+                                                />
+                                            </customData>
+                                        </Text>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </Panel>
+            </ScrollContainer>
+        </content>
+        <footer>
+            <core:Fragment
+                fragmentName="ems.view.fragment.Footer"
+                type="XML"
+            />
+        </footer>
     </Page>
 </mvc:View>

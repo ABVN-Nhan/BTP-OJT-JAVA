@@ -19,6 +19,18 @@ sap.ui.define([
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
 
+            // set the employee model
+            this.setModel(models.createEmployeeModel(), "employeeModel");
+
+            // set the department model
+            this.setModel(models.createDepartmentModel(), "departmentModel");
+
+            // set the role model
+            this.setModel(models.createRoleModel(), "roleModel");
+
+            // set the user model
+            this.setModel(models.createUserModel(), "user");
+
             // enable routing
             this.getRouter().initialize();
         }

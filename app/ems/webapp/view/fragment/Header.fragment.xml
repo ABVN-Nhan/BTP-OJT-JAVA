@@ -17,17 +17,17 @@
         />
         <ToolbarSpacer />
         <Text
-            text="Welcome"
-            visible="{= ${user>/currentUser} !== null}"
+            text="{i18n>welcome}"
+            visible="{= ${user>/userId} !== null}"
         />
         <Text
-            text="{user>/currentUser}"
-            visible="{= ${user>/currentUser} !== null}"
+            text="{user>/userId}"
+            visible="{= ${user>/userId} !== null}"
             class="colorText"
         />
         <Text
             text="{= ${user>/isAdmin} ? '(Admin)' : '(Viewer)'}"
-            visible="{= ${user>/currentUser} !== null}"
+            visible="{= ${user>/isAuthenticated} === true}"
             class="sapUiSmallMarginEnd"
         />
     </Toolbar>
