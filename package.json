@@ -5,6 +5,7 @@
   "license": "ISC",
   "repository": "<Add your repository here>",
   "devDependencies": {
-    "@sap/cds-dk": "^8.9.2"
+    "@sap/cds-dk": "^8",
+    "@sap/cds": "^8"
   }
 }

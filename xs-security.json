@@ -1,4 +1,7 @@
 {
+  "xsappname": "emsjava-auth",
+  "tenant-mode": "dedicated",
+  "description": "BTP OJT EMS with JAVA",
   "scopes": [
     {
       "name": "$XSAPPNAME.admin",
@@ -10,6 +13,27 @@
     }
   ],
   "attributes": [],
-  "role-templates": [],
-  "authorities-inheritance": false
+  "role-templates": [
+    {
+      "name": "admin",
+      "description": "Administrator with full access to employee management",
+      "scope-references": [
+        "$XSAPPNAME.admin"
+      ]
+    },
+    {
+      "name": "viewer",
+      "description": "Viewer with read-only access",
+      "scope-references": [
+        "$XSAPPNAME.viewer"
+      ]
+    }
+  ],
+  "authorities-inheritance": false,
+  "oauth2-configuration": {
+    "redirect-uris": [
+      "https://*.us10.trial.applicationstudio.cloud.sap/**",
+      "https://*.cfapps.us10-001.hana.ondemand.com/**"
+    ]
+  }
 }
