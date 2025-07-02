@@ -60,11 +60,17 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>        
         </dependency>
+
 		<dependency>
 			<groupId>com.sap.cds</groupId>
 			<artifactId>cds-feature-hana</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.sap.cloud.security.xsuaa</groupId>
+			<artifactId>spring-xsuaa</artifactId>
+			<version>3.6.0</version>
+		</dependency>
 
 	</dependencies>
 

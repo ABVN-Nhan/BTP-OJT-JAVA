@@ -46,6 +46,28 @@ modules:
     requires:
       - name: OJTJAVA-db
 
+  - name: OJTJAVA
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      keep-existing-routes: true
+      disk-quota: 256M
+      memory: 256M
+    requires:
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api # must be used in xs-app.json as well
+          url: ~{srv-url}
+          forwardAuthToken: true
+      - name: OJTJAVA-auth
+    provides:
+      - name: app-api
+        properties:
+          app-protocol: ${protocol}
+          app-uri: ${default-uri}
+          url: ${default-url}
+
 resources:
   - name: OJTJAVA-auth
     type: org.cloudfoundry.managed-service
@@ -56,6 +78,11 @@ resources:
       config:
         xsappname: OJTJAVA-${org}-${space}
         tenant-mode: dedicated
+        oauth2-configuration:
+          redirect-uris:
+            - https://~{app-api/app-uri}/**
+    requires:
+      - name: app-api
   - name: OJTJAVA-db
     type: com.sap.xs.hdi-container
     parameters:
