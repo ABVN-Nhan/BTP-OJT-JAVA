@@ -1,0 +1,6 @@
+ID,firstName,lastName,dateOfBirth,gender,email,hireDate,salary,role_ID,department_ID
+750e8400-e29b-41d4-a716-446655440001,Nhan,Tran,2002-04-26,Male,nhantran@abvn.com,2021-01-15,52000.00,rrrrrrrr-oooo-llll-eeee-111111111111,dddddddd-eeee-pppp-tttt-111111111111
+750e8400-e29b-41d4-a716-446655440002,Binh,Vo,2004-08-22,Male,binhvo@abvn.com,2023-03-10,72000.00,rrrrrrrr-oooo-llll-eeee-111111111111,dddddddd-eeee-pppp-tttt-111111111111
+750e8400-e29b-41d4-a716-446655440003,Hoang,Chau,2003-12-03,Female,chauhoang@abvn.com,2024-06-01,42000.00,rrrrrrrr-oooo-llll-eeee-333333333333,dddddddd-eeee-pppp-tttt-222222222222
+750e8400-e29b-41d4-a716-446655440004,Anh,Huynh,2002-04-18,Female,anhhuynh@abvn.com,2022-09-20,47000.00,rrrrrrrr-oooo-llll-eeee-333333333333,dddddddd-eeee-pppp-tttt-222222222222
+750e8400-e29b-41d4-a716-446655440005,Thach,Bui,1993-11-30,Male,thachbui@abvn.com,2020-02-14,67000.00,rrrrrrrr-oooo-llll-eeee-222222222222,dddddddd-eeee-pppp-tttt-111111111111

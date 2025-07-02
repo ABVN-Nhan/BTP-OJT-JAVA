@@ -3,7 +3,15 @@
         "native_hana_associations": false
     },
     "requires": {
-        "auth": "xsuaa",
-        "db": "hana"
+        "[production]": {
+            "db": "hana",
+            "auth": "xsuaa"
+        },
+        "[hybrid]": {
+            "db": "hana",
+            "auth": "xsuaa"
+        },
+        "db": "hana",
+        "auth": "xsuaa"
     }
 }
