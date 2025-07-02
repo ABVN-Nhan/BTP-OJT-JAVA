@@ -26,6 +26,7 @@ modules:
           srv-url: ${default-url}
     requires:
       - name: OJTJAVA-auth
+      - name: OJTJAVA-db
   - name: OJTJAVA-srv
     type: java
     path: gen/srv
