@@ -1,6 +1,6 @@
 ########################
 @baseUrl = http://localhost:8080/odata/v4/ems
-@me = authenticated:
+@me = viewer:
 
 ###
 GET {{baseUrl}}/Employees
