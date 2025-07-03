@@ -9,15 +9,19 @@
         id="employeeListPage"
         showHeader="false"
     >
-        <core:Fragment
-            fragmentName="ems.view.fragment.Header"
-            type="XML"
-        />
+        <subHeader>
+            <core:Fragment
+                fragmentName="ems.view.fragment.Header"
+                type="XML"
+            />
+        </subHeader>
+        
         <content>
             <ScrollContainer
                 height="100%"
-                class="sapUiResponsiveMargin"
-                vertical="false"
+                class="sapUiResponsiveMargin sapUiContentPadding"
+                vertical="true"
+                horizontal="false"
             >
                 <Panel
                     class="customPanel"
