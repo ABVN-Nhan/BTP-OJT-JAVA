@@ -101,6 +101,13 @@
           "target": [
             "employeeList"
           ]
+        },
+        {
+          "pattern": "employee/{employeeId}",
+          "name": "employeeDetail",
+          "target": [
+            "employeeDetail"
+          ]
         }
       ],
       "targets": {
@@ -108,6 +115,18 @@
           "viewId": "employeeList",
           "viewName": "EmployeeList",
           "viewLevel": 1,
+          "transition": "show"
+        },
+        "employeeDetail": {
+          "viewId": "employeeDetail",
+          "viewName": "EmployeeDetail",
+          "viewLevel": 2,
+          "transition": "show"
+        },
+        "notFound": {
+          "viewId": "notFound",
+          "viewName": "NotFound",
+          "viewLevel": 0,
           "transition": "show"
         }
       }

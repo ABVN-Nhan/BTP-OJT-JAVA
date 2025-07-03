@@ -18,7 +18,7 @@
         <ToolbarSpacer />
         <Text
             text="{i18n>welcome}"
-            visible="{= ${user>/userId} !== null}"
+            visible="{= ${user>/isAuthenticated} === true}"
         />
         <Text
             text="{user>/userId}"

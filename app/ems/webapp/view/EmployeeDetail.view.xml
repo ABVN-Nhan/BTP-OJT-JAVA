@@ -1,0 +1,241 @@
+<mvc:View
+    controllerName="ems.controller.EmployeeDetail"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    displayBlock="true"
+>
+    <Page
+        id="employeeDetailPage"
+        showHeader="false"
+        showNavButton="true"
+        navButtonPress="onNavBack"
+    >
+        <content>
+            <core:Fragment
+                fragmentName="ems.view.fragment.Header"
+                type="XML"
+            />
+
+            <Panel
+                class="sapUiResponsiveMargin"
+                width="auto"
+            >
+                <headerToolbar>
+                    <Toolbar height="3rem">
+                        <Button
+                            id="backToListButton"
+                            icon="sap-icon://nav-back"
+                            press="onNavBack"
+                            tooltip="{i18n>backToList}"
+                        />
+                        <Title
+                            text="{
+                                parts: [
+                                    'employeeModel>/firstName',
+                                    'employeeModel>/lastName',
+                                    'employeeModel>/ID'
+                                ],
+                                formatter: '.formatter.formatEmployeeTitle'
+                            }"
+                        />
+                        <ToolbarSpacer />
+
+                        <!-- Edit/Save/Cancel Buttons -->
+                        <Button
+                            id="editButton"
+                            text="{i18n>editButton}"
+                            icon="sap-icon://edit"
+                            type="Emphasized"
+                            press="onEditEmployee"
+                            visible="{= !${viewModel>/editMode} &amp;&amp; ${user>/isAdmin}}"
+                        />
+
+                        <Button
+                            id="saveButton"
+                            text="{i18n>saveButton}"
+                            icon="sap-icon://save"
+                            type="Emphasized"
+                            press="onSaveEmployee"
+                            visible="{viewModel>/editMode}"
+                        />
+
+                        <Button
+                            id="cancelButton"
+                            text="{i18n>cancelButton}"
+                            icon="sap-icon://cancel"
+                            press="onCancelEdit"
+                            visible="{viewModel>/editMode}"
+                        />
+
+                        <Button
+                            id="deleteButton"
+                            text="{i18n>deleteButton}"
+                            icon="sap-icon://delete"
+                            type="Reject"
+                            press="onDeleteEmployee"
+                            visible="{= !${viewModel>/editMode} &amp;&amp; ${user>/isAdmin}}"
+                        />
+                    </Toolbar>
+                </headerToolbar>
+
+                <VBox class="sapUiMediumMargin">
+                    <!-- Employee Form -->
+                    <f:SimpleForm
+                        id="employeeForm"
+                        editable="false"
+                        layout="ResponsiveGridLayout"
+                        labelSpanXL="3"
+                        labelSpanL="3"
+                        labelSpanM="4"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="4"
+                        emptySpanL="4"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="1"
+                        columnsL="1"
+                        columnsM="1"
+                        singleContainerFullSize="false"
+                    >
+                        <f:content>
+                            <!-- Personal Information Section -->
+                            <core:Title text="{i18n>personalInformation}" />
+
+                            <Label text="{i18n>firstName}" />
+                            <Input
+                                id="firstNameInput"
+                                value="{employeeModel>/firstName}"
+                                editable="false"
+                                required="true"
+                            />
+
+                            <Label text="{i18n>lastName}" />
+                            <Input
+                                id="lastNameInput"
+                                value="{employeeModel>/lastName}"
+                                editable="false"
+                                required="true"
+                            />
+
+                            <Label text="{i18n>email}" />
+                            <Input
+                                id="emailInput"
+                                value="{employeeModel>/email}"
+                                editable="false"
+                                required="true"
+                                type="Email"
+                            />
+
+                            <Label text="{i18n>dateOfBirth}" />
+                            <DatePicker
+                                id="dobInput"
+                                value="{employeeModel>/dateOfBirth}"
+                                editable="false"
+                                required="true"
+                            />
+
+                            <Label text="{i18n>gender}" />
+                            <ComboBox
+                                id="genderInput"
+                                selectedKey="{employeeModel>/gender}"
+                                editable="false"
+                                required="true"
+                            >
+                                <core:Item
+                                    key="Male"
+                                    text="{i18n>male}"
+                                />
+                                <core:Item
+                                    key="Female"
+                                    text="{i18n>female}"
+                                />
+                            </ComboBox>
+
+                            <!-- Employment Information Section -->
+                            <core:Title text="{i18n>employmentInformation}" />
+
+                            <Label text="{i18n>department}" />
+                            <ComboBox
+                                id="departmentInput"
+                                selectedKey="{employeeModel>/department/ID}"
+                                items="{departmentModel>/}"
+                                editable="false"
+                                required="true"
+                            >
+                                <core:Item
+                                    key="{departmentModel>ID}"
+                                    text="{departmentModel>name}"
+                                />
+                            </ComboBox>
+
+                            <Label text="{i18n>role}" />
+                            <ComboBox
+                                id="roleInput"
+                                selectedKey="{employeeModel>/role/ID}"
+                                items="{roleModel>/}"
+                                editable="false"
+                                required="true"
+                            >
+                                <core:Item
+                                    key="{roleModel>ID}"
+                                    text="{roleModel>name}"
+                                />
+                            </ComboBox>
+
+                            <Label text="{i18n>hireDate}" />
+                            <DatePicker
+                                id="hireDateInput"
+                                value="{employeeModel>/hireDate}"
+                                editable="false"
+                                required="true"
+                            />
+
+                            <Label
+                                text="{i18n>yearsOfExperience}"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <Text
+                                text="{
+                                    path: 'employeeModel>/hireDate',
+                                    formatter: '.formatter.formatYearsOfExperience'
+                                }"
+                                class="sapUiSmallMarginBottom"
+                            />
+
+                            <Label text="{i18n>salary}" />
+                            <HBox>
+                                <Input
+                                    id="salaryInput"
+                                    value="{
+                                        path: 'employeeModel>/salary',
+                                        formatter: '.formatter.formatSalary'
+                                    }"
+                                    editable="false"
+                                    width="300px"
+                                />
+                                <Button
+                                    id="calculateSalaryButton"
+                                    text="{i18n>calculateSalary}"
+                                    press="onCalculateSalary"
+                                    visible="{= ${viewModel>/editMode} &amp;&amp; ${user>/isAdmin}}"
+                                    class="sapUiSmallMarginBegin"
+                                    enabled="{viewModel>/editMode}"
+                                />
+                            </HBox>
+                        </f:content>
+                    </f:SimpleForm>
+                </VBox>
+            </Panel>
+        </content>
+
+        <footer>
+            <core:Fragment
+                fragmentName="ems.view.fragment.Footer"
+                type="XML"
+            />
+        </footer>
+    </Page>
+</mvc:View>

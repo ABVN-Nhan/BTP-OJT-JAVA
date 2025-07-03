@@ -1,0 +1,181 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+>
+    <Dialog
+        title="{i18n>addNewEmployeeTitle}"
+        contentWidth="600px"
+        contentHeight="auto"
+        draggable="true"
+        resizable="true"
+    >
+        <content>
+            <f:SimpleForm
+                editable="true"
+                layout="ResponsiveGridLayout"
+                labelSpanXL="4"
+                labelSpanL="4"
+                labelSpanM="4"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="0"
+                emptySpanL="0"
+                emptySpanM="0"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false"
+            >
+                <f:content>
+                    <!-- Personal Information Section -->
+                    <core:Title text="{i18n>personalInformation}" />
+
+                    <Label text="{i18n>firstName}" required="true" />
+                    <Input
+                        id="newFirstNameInput"
+                        value="{newEmployeeModel>/firstName}"
+                        change="onNewEmployeeFieldChange"
+                        placeholder="{i18n>enterFirstName}"
+                        maxLength="50"
+                        required="true"
+                    />
+
+                    <Label text="{i18n>lastName}" required="true" />
+                    <Input
+                        id="newLastNameInput"
+                        value="{newEmployeeModel>/lastName}"
+                        change="onNewEmployeeFieldChange"
+                        placeholder="{i18n>enterLastName}"
+                        maxLength="50"
+                        required="true"
+                    />
+
+                    <Label text="{i18n>email}" required="true" />
+                    <Input
+                        id="newEmailInput"
+                        value="{newEmployeeModel>/email}"
+                        change="onNewEmployeeFieldChange"
+                        placeholder="{i18n>enterEmail}"
+                        type="Email"
+                        maxLength="100"
+                        required="true"
+                    />
+
+                    <Label text="{i18n>dateOfBirth}" required="true" />
+                    <DatePicker
+                        id="newDateOfBirthPicker"
+                        value="{newEmployeeModel>/dateOfBirth}"
+                        change="onNewEmployeeFieldChange"
+                        displayFormat="dd/MM/yyyy"
+                        valueFormat="yyyy-MM-dd"
+                        placeholder="{i18n>selectDateOfBirth}"
+                        required="true"
+                    />
+
+                    <Label text="{i18n>gender}" required="true" />
+                    <ComboBox
+                        id="newGenderComboBox"
+                        selectedKey="{newEmployeeModel>/gender}"
+                        selectionChange="onNewEmployeeFieldChange"
+                        placeholder="{i18n>selectGender}"
+                        required="true"
+                    >
+                        <core:Item key="Male" text="{i18n>male}" />
+                        <core:Item key="Female" text="{i18n>female}" />
+                    </ComboBox>
+
+                    <!-- Employment Information Section -->
+                    <core:Title text="{i18n>employmentInformation}" />
+
+                    <Label text="{i18n>hireDate}" required="true" />
+                    <DatePicker
+                        id="newHireDatePicker"
+                        value="{newEmployeeModel>/hireDate}"
+                        change="onNewEmployeeFieldChange"
+                        displayFormat="dd/MM/yyyy"
+                        valueFormat="yyyy-MM-dd"
+                        placeholder="{i18n>selectHireDate}"
+                        required="true"
+                    />
+
+                    <!-- Experience Display -->
+                    <Label text="{i18n>yearsOfExperience}"/>
+                    <Text text="{
+                            path: 'newEmployeeModel>/hireDate',
+                            formatter: '.formatter.formatYearsOfExperience'
+                        }"
+                    />
+
+                    <Label text="{i18n>department}" required="true" />
+                    <ComboBox
+                        id="newDepartmentComboBox"
+                        selectedKey="{newEmployeeModel>/department_ID}"
+                        selectionChange="onNewEmployeeFieldChange"
+                        placeholder="{i18n>selectDepartment}"
+                        items="{departmentModel>/}"
+                        required="true"
+                    >
+                        <core:Item 
+                            key="{departmentModel>ID}" 
+                            text="{departmentModel>name}"
+                        />
+                    </ComboBox>
+
+                    <Label text="{i18n>role}" required="true" />
+                    <ComboBox
+                        id="newRoleComboBox"
+                        selectedKey="{newEmployeeModel>/role_ID}"
+                        selectionChange="onNewEmployeeRoleChange"
+                        placeholder="{i18n>selectRole}"
+                        items="{roleModel>/}"
+                        required="true"
+                    >
+                        <core:Item 
+                            key="{roleModel>ID}" 
+                            text="{roleModel>name}"
+                        />
+                    </ComboBox>
+
+                    <Label text="{i18n>salary}"/>
+                    <HBox alignItems="Center">
+                        <Input
+                            id="newSalaryInput"
+                            value="{
+                                path: 'newEmployeeModel>/salary',
+                                formatter: '.formatter.formatSalary'
+                            }"
+                            editable="false"
+                            width="200px"
+                        />
+                        <Button
+                            id="calculateNewSalaryButton"
+                            text="{i18n>calculateSalary}"
+                            press="onCalculateNewEmployeeSalary"
+                            class="sapUiSmallMarginBegin"
+                            type="Transparent"
+                            tooltip="{i18n>calculateSalaryTooltip}"
+                        />
+                    </HBox>
+                </f:content>
+            </f:SimpleForm>
+        </content>
+
+        <buttons>
+            <Button
+                id="createEmployeeButton"
+                text="{i18n>createEmployeeButton}"
+                type="Emphasized"
+                press="onSaveNewEmployee"
+                icon="sap-icon://save"
+            />
+            <Button
+                id="cancelEmployeeButton"
+                text="{i18n>cancelButton}"
+                press="onCancelNewEmployee"
+                icon="sap-icon://cancel"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
