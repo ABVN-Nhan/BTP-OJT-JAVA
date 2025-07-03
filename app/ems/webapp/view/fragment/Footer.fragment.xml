@@ -1,0 +1,21 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Toolbar class="customFooter">
+        <Text
+            text="Tran Thanh Nhan"
+            class="sapUiSmallMargin colorText"
+        />
+        <ToolbarSpacer />
+        <Text
+            text="ABeam Consulting Vietnam"
+            class="sapUiSmallMargin colorText"
+        />
+        <ToolbarSpacer />
+        <Text
+            text="2025 BTP Training - OJT"
+            class="sapUiSmallMargin colorText"
+        />
+    </Toolbar>
+</core:FragmentDefinition>

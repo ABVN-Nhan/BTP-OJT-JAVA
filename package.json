@@ -6,6 +6,13 @@
   "repository": "<Add your repository here>",
   "devDependencies": {
     "@sap/cds-dk": "^8",
-    "@sap/cds": "^8"
+    "@sap/cds": "^8",
+    "rimraf": "^5.0.5",
+    "mbt": "^1.2.29"
+  },
+  "scripts": {
+    "undeploy": "cf undeploy OJTJAVA --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1"
   }
 }

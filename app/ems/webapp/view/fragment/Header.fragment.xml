@@ -1,0 +1,34 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Toolbar
+        class="customHeader"
+        height="3rem"
+    >
+        <Image
+            src="./assets/logo.svg"
+            class="headerLogo sapUiSmallMarginBegin"
+            press=".onNavigateToHome"
+        />
+        <Text
+            text="{i18n>appTitle}"
+            class="headerTitle colorText sapUiSmallMarginBegin"
+        />
+        <ToolbarSpacer />
+        <Text
+            text="{i18n>welcome}"
+            visible="{= ${user>/isAuthenticated} === true}"
+        />
+        <Text
+            text="{user>/userId}"
+            visible="{= ${user>/userId} !== null}"
+            class="colorText"
+        />
+        <Text
+            text="{= ${user>/isAdmin} ? '(Admin)' : '(Viewer)'}"
+            visible="{= ${user>/isAuthenticated} === true}"
+            class="sapUiSmallMarginEnd"
+        />
+    </Toolbar>
+</core:FragmentDefinition>

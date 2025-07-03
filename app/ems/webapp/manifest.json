@@ -1,0 +1,141 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "ems",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.18.1",
+      "toolsId": "7a7e484c-b96d-4e78-b17f-81c599fc4e5a"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/ems/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.136.2",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "ems.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "ems.view",
+        "async": true,
+        "bypassed": {
+          "target": "notFound"
+        },
+        "viewPath": "ems.view"
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "employeeList",
+          "target": [
+            "employeeList"
+          ]
+        },
+        {
+          "pattern": "employee/{employeeId}",
+          "name": "employeeDetail",
+          "target": [
+            "employeeDetail"
+          ]
+        }
+      ],
+      "targets": {
+        "employeeList": {
+          "viewId": "employeeList",
+          "viewName": "EmployeeList",
+          "viewLevel": 1,
+          "transition": "show"
+        },
+        "employeeDetail": {
+          "viewId": "employeeDetail",
+          "viewName": "EmployeeDetail",
+          "viewLevel": 2,
+          "transition": "show"
+        },
+        "notFound": {
+          "viewId": "notFound",
+          "viewName": "NotFound",
+          "viewLevel": 0,
+          "transition": "show"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "ems.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}
