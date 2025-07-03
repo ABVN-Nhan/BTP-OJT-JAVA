@@ -143,7 +143,7 @@ cds:
 {
   "VCAP_SERVICES": {
     "hana": [
-        ...
+      "..."
     ],
     "xsuaa": [
         {
@@ -221,7 +221,37 @@ In your project folder run in port 5000:
 cds bind --exec -- npm start --prefix app/router
 ```
 
-### Run project with Hybrid Mode
+Run project with Hybrid Mode
 ```bash
 mvn spring-boot:run -Dspring-boot.run.profiles=cloud
+```
+
+## Deploy to BTP Cloud Foundry
+Make sure to have enough module and resource in `mta.yaml`
+
+```yaml
+# html5 runtime
+modules:
+  - name: <module-name>
+      type: approuter.nodejs
+      path: app/router
+      requires:
+        ...
+        - name: html5-apps-repo-runtime
+...
+resources:
+  - name: html5-apps-repo-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
+```
+Run this command to both build and deploy:
+```bash
+cds up
+```
+If catch error `Internal Server Error (500)`, run this command in terminal and restart the deployed app:
+```bash
+cf set-env <service-name> COOKIE_BACKWARD_COMPATIBILITY true
+cf restart <service-name>
 ```

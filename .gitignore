@@ -36,3 +36,14 @@ hs_err*
 gen/db/.env
 # added by cds
 .cdsrc-private.json
+
+.default-env.json
+
+# added by cds
+.cdsrc-private.json
+
+**/dist/
+
+**.zip
+# added by cds
+.cdsrc-private.json
