@@ -20,23 +20,48 @@ sap.ui.define([
         },
 
         _onRouteMatched: function (oEvent) {
-            // Check if we need to refresh data
+            // Only refresh if explicitly requested via route parameter
             var oArgs = oEvent.getParameter("arguments");
             var bForceRefresh = oArgs && oArgs.refresh === "true";
             
-            // Always refresh when coming from other pages to ensure data is up-to-date
-            var oViewModel = this.getView().getModel("viewModel");
-            if (oViewModel) {
-                oViewModel.setProperty("/busy", true);
-            }
-
-            this._loadEmployees().catch(function(oError) {
-                console.error("Error refreshing data on route match:", oError);
-            }).finally(function() {
+            if (bForceRefresh) {
+                var oViewModel = this.getView().getModel("viewModel");
                 if (oViewModel) {
-                    oViewModel.setProperty("/busy", false);
+                    oViewModel.setProperty("/busy", true);
                 }
-            }.bind(this));
+
+                this._loadEmployees().then(function() {
+                    // Clear the refresh parameter from URL after refresh
+                    this._clearRefreshParameter();
+                }.bind(this)).catch(function(oError) {
+                    console.error("Error refreshing data on route match:", oError);
+                }).finally(function() {
+                    if (oViewModel) {
+                        oViewModel.setProperty("/busy", false);
+                    }
+                }.bind(this));
+            }
+            
+            // Always ensure filters are applied to current data
+            this._applyCurrentFilters();
+        },
+
+        _clearRefreshParameter: function() {
+            // Navigate to clean URL without refresh parameter
+            var oRouter = this.getOwnerComponent().getRouter();
+            if (oRouter) {
+                oRouter.navTo("employeeList", {}, true /* replace history */);
+            }
+        },
+
+        _applyCurrentFilters: function() {
+            // Reapply any active filters to the current data
+            var sDepartmentId = this.byId("departmentFilter").getSelectedKey();
+            var sRoleId = this.byId("roleFilter").getSelectedKey();
+            
+            if (sDepartmentId || sRoleId) {
+                this.onFilterChange();
+            }
         },
 
         _initializeModels: function () {
@@ -62,7 +87,7 @@ sap.ui.define([
                     userId: oData.userId,
                     isAuthenticated: oData.isAuthenticated,
                     roles: oData.roles,
-                    isAdmin: oData.roles.admin
+                    isAdmin: oData.roles.admin === true && oData.roles.viewer !== true
                 });
             }).catch((oError) => {
                 console.error("Error loading user info:", oError);
@@ -141,8 +166,27 @@ sap.ui.define([
         },
 
         onRefreshData: function () {
-            this._loadEmployees();
-            MessageToast.show(this.getResourceBundle().getText("dataRefreshed"));
+            var oViewModel = this.getView().getModel("viewModel");
+            if (oViewModel) {
+                oViewModel.setProperty("/busy", true);
+            }
+
+            this._loadEmployees().then(function() {
+                var oResourceBundle = this.getResourceBundle();
+                if (oResourceBundle) {
+                    MessageToast.show(oResourceBundle.getText("dataRefreshed"));
+                }
+            }.bind(this)).catch(function(oError) {
+                console.error("Error refreshing data:", oError);
+                var oResourceBundle = this.getResourceBundle();
+                if (oResourceBundle) {
+                    MessageToast.show(oResourceBundle.getText("errorRefreshingData"));
+                }
+            }).finally(function() {
+                if (oViewModel) {
+                    oViewModel.setProperty("/busy", false);
+                }
+            }.bind(this));
         },
 
         onAddEmployee: function () {

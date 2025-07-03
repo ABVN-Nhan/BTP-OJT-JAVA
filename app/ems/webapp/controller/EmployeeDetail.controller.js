@@ -444,14 +444,7 @@ sap.ui.define([
                 return;
             }
 
-            var oHistory = History.getInstance();
-            var sPreviousHash = oHistory.getPreviousHash();
-
-            if (sPreviousHash !== undefined) {
-                window.history.go(-1);
-            } else {
-                oRouter.navTo("employeeList", {}, true);
-            }
+            oRouter.navTo("employeeList", {}, true);
         },
 
         onEditEmployee: function () {
