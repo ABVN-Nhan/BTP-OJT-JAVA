@@ -58,7 +58,6 @@ Access OData service at: http://localhost:8080/
 <dependency>
   <groupId>com.sap.cds</groupId>
   <artifactId>cds-feature-hana</artifactId>
-  <scope>runtime</scope>
 </dependency>
 ```
 ### Add hana service
